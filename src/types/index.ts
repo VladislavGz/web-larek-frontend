@@ -1,4 +1,4 @@
-type TBasketItems = { [id: string]: number }
+export type TBasketItems = { [id: string]: number }
 
 export interface IProductModel {
     id: string;
