@@ -10,10 +10,10 @@ export interface IProductModel {
 }
 
 export interface IProductCatalogModel {
-    items: IBasketModel[];
+    items: IProductModel[];
 
-    setItems(items: IBasketModel[]): void;
-    getProductById(id: string): IProductModel;
+    setItems(items: IProductModel[]): void;
+    getProductById(id: string): IProductModel | null;
 }
 
 export interface IBasketModel {
