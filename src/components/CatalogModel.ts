@@ -1,6 +1,6 @@
 import { ICatalogModel, IProductModel } from "../types";
 
-export class ProductCatalogModel implements ICatalogModel {
+export class CatalogModel implements ICatalogModel {
 
     items: IProductModel[];
 
