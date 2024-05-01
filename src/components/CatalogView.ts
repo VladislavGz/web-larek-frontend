@@ -6,5 +6,11 @@ export class CatalogView implements IView {
 
     }
 
-    
+    render(data: { items: HTMLElement[] }): HTMLElement {
+        if (data) {
+            this.container.replaceChildren(...data.items);
+        }
+
+        return this.container;
+    }
 }
