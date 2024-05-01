@@ -4,8 +4,9 @@ export class CatalogModel implements ICatalogModel {
 
     items: IProductModel[];
 
-    constructor(items: IProductModel[]) {
-        this.setItems(items);
+    constructor(items?: IProductModel[]) {
+        if (items) this.setItems(items);
+        else this.items = [];
     }
 
     setItems(items: IProductModel[]): void {
