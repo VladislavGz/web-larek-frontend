@@ -1,6 +1,5 @@
 export type TBasketItem = {
     title: string,
-    count: number,
     price: number
 }
 
