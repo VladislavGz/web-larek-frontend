@@ -24,7 +24,7 @@ export interface IBasketModel {
     items: TBasketItems;
     totalCost: number;
 
-    addProduct(id: string, item: TBasketItem): void;
+    addProduct(item: TBasketItem): void;
     removeProduct(id: string): void;
     clear(): void;
     getItems(): TBasketItems;
