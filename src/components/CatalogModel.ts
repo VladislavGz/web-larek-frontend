@@ -1,6 +1,6 @@
-import { IProductCatalogModel, IProductModel } from "../types";
+import { ICatalogModel, IProductModel } from "../types";
 
-export class ProductCatalogModel implements IProductCatalogModel {
+export class ProductCatalogModel implements ICatalogModel {
 
     items: IProductModel[];
 
@@ -11,7 +11,7 @@ export class ProductCatalogModel implements IProductCatalogModel {
     setItems(items: IProductModel[]): void {
         this.items = items;
     }
-
+    
     getProductById(id: string): IProductModel | null {
         const idArr = this.items.map(item => item.id);
         const searchIndex = idArr.indexOf(id);

@@ -7,7 +7,7 @@ export interface IProductModel {
     price: number;
 }
 
-export interface IProductCatalogModel {
+export interface ICatalogModel {
     items: IProductModel[];
 
     setItems(items: IProductModel[]): void;
