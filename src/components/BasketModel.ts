@@ -8,8 +8,8 @@ export class BasketModel implements IBasketModel {
         this.items = {};
     }
 
-    addProduct(id: string, item: TBasketItem): void {
-        this.items[id] = item;
+    addProduct(item: TBasketItem): void {
+        this.items[item.id] = item;
         this._changed();
     }
 
