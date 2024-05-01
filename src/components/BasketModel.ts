@@ -30,7 +30,7 @@ export class BasketModel implements IBasketModel {
     calculateCost(): number {
         let cost = 0;
         for (let id in this.items) {
-            cost += this.items[id].count * this.items[id].price;
+            cost += this.items[id].price;
         }
 
         return cost;
