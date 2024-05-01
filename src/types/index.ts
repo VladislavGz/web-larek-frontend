@@ -44,5 +44,5 @@ export interface IViewConstructor {
 }
 
 export interface IView {
-    render(): HTMLElement;
+    render(data?: object): HTMLElement;
 }
