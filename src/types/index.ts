@@ -1,12 +1,3 @@
-export type TBasketItem = {
-    title: string,
-    price: number
-}
-
-export type TBasketItems = {
-    [id: string]: TBasketItem
-}
-
 export interface IProductModel {
     id: string;
     description: string;
@@ -21,6 +12,12 @@ export interface IProductCatalogModel {
 
     setItems(items: IProductModel[]): void;
     getProductById(id: string): IProductModel | null;
+}
+
+export type TBasketItem = Pick<IProductModel, 'id' | 'title' | 'price'>;
+
+export type TBasketItems = {
+    [id: string]: TBasketItem
 }
 
 export interface IBasketModel {
