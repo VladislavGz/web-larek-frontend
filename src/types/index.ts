@@ -1,9 +1,11 @@
+export type TBasketItem = {
+    title: string,
+    count: number,
+    price: number
+}
+
 export type TBasketItems = {
-    [id: string]: {
-        title: string,
-        count: number,
-        price: number
-    }
+    [id: string]: TBasketItem
 }
 
 export interface IProductModel {
@@ -26,7 +28,7 @@ export interface IBasketModel {
     items: TBasketItems;
     totalCost: number;
 
-    addProduct(id: string, price: number): void;
+    addProduct(item: TBasketItem): void;
     removeProduct(id: string): void;
     clear(): void;
     getItems(): TBasketItems;
@@ -38,9 +40,9 @@ export interface IEventEmitter {
 }
 
 export interface IViewConstructor {
-    new (container: HTMLElement, events?: IEventEmitter): IView;
+    new(container: HTMLElement, events?: IEventEmitter): IView;
 }
 
 export interface IView {
-    render(): HTMLElement;  
+    render(): HTMLElement;
 }
