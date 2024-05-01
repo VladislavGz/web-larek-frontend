@@ -1,6 +1,6 @@
 import { IEventEmitter, IView } from "../types";
 
-export class CatalogItem implements IView {
+export class CatalogItemView implements IView {
 
     constructor (protected container: HTMLElement, protected events: IEventEmitter) {
 
