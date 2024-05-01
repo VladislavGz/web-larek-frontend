@@ -1,4 +1,10 @@
-export type TBasketItems = { [id: string]: number }
+export type TBasketItems = {
+    [id: string]: {
+        title: string,
+        count: number,
+        price: number
+    }
+}
 
 export interface IProductModel {
     id: string;
