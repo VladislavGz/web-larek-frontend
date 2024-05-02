@@ -9,6 +9,7 @@ import { IProductModel } from './types';
 import { API_URL, CDN_URL } from './utils/constants';
 import { cloneTemplate } from './utils/utils';
 
+/*------------------------------------------------------------------------------------------------------------------------------------*/
 //шаблоны
 const catalogItemTemplate = document.querySelector('#card-catalog') as HTMLTemplateElement;
 
@@ -23,6 +24,7 @@ const catalogModel = new CatalogModel(events);
 const catalog = new CatalogView(document.querySelector('.gallery'), events);
 const modalCard = new ModalViewCardFull(document.querySelector('#modal-card-full'), events);
 
+/*------------------------------------------------------------------------------------------------------------------------------------*/
 //событие изменения модели каталога товаров
 events.on('catalog:change', (data: { items: IProductModel[] }) => {
     console.log('EVT: catalog:change')
@@ -37,9 +39,24 @@ events.on('catalog:change', (data: { items: IProductModel[] }) => {
 //событие клика на карточку товара в каталоге
 events.on('ui:catalog-item-open', (data: { id: string }) => {
     console.log(`EVT: ui:catalog-item-open | id: ${data.id}`);
+
+    modalCard.render({product: catalogModel.getProductById(data.id), cdn: CDN_URL});
+    modalCard.open();
 })
 
+//событие закрытия модального окна товара
+events.on('ui:modal-card-closeModel', () => {
+    console.log('EVT: ui:modal-card-closeModel');
 
+    modalCard.close();
+});
+
+//событие клика по кнопке добавления товара в корзину
+events.on('ui:modal-card-addBasket', (data: {id: string}) => {
+    console.log(`EVT: ui:modal-card-addBasket | id: ${data.id}`);
+})
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
 //запрашиваем данные всех товаров с сервера
 api.get('/product')
     .then((result: { items: IProductModel[]; total: number }) => {
