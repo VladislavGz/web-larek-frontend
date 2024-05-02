@@ -1,6 +1,7 @@
 import { CatalogItemView } from './components/CatalogItemView';
 import { CatalogModel } from './components/CatalogModel';
 import { CatalogView } from './components/CatalogView';
+import { ModalViewCardFull } from './components/ModalView';
 import { Api } from './components/base/api';
 import { EventEmitter } from './components/base/events';
 import './scss/styles.scss';
@@ -15,9 +16,12 @@ const catalogItemTemplate = document.querySelector('#card-catalog') as HTMLTempl
 const api = new Api(API_URL);
 const events = new EventEmitter();
 
+//модели
 const catalogModel = new CatalogModel(events);
 
+//отображения
 const catalog = new CatalogView(document.querySelector('.gallery'), events);
+const modalCard = new ModalViewCardFull(document.querySelector('#modal-card-full'), events);
 
 //событие изменения модели каталога товаров
 events.on('catalog:change', (data: { items: IProductModel[] }) => {
