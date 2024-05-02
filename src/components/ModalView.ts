@@ -1,4 +1,4 @@
-import { IEventEmitter, IView } from "../types";
+import { IEventEmitter, IProductModel, IView } from "../types";
 
 abstract class ModalView implements IView {
 
@@ -39,6 +39,17 @@ export class ModalViewCardFull extends ModalView {
 
     protected id: string | null = null;
 
+    private static categoryClassList: {
+        [category: string]: string;
+    } = {
+        base: 'card__category',
+        'софт-скил': 'card__category_soft',
+        'другое': 'card__category_other',
+        'дополнительное': 'card__category_additional',
+        'хард-скил': 'card__category_hard',
+        'кнопка': 'card__category_button'
+    }
+
     constructor(container: HTMLElement, events: IEventEmitter) {
         super(container, events);
 
@@ -52,5 +63,20 @@ export class ModalViewCardFull extends ModalView {
         this.addBasketBtn.addEventListener('click', () => {
             this.events.emit('ui:modal-card-addBasket', {id: this.id});
         });
+    }
+
+    override render(data: {product: IProductModel, cdn: string}): HTMLElement {
+        const price = data.product.price ? `${data.product.price}` : 'Бесценно';
+
+        this.id = data.product.id;
+        this.category.textContent = data.product.category;
+        this.title.textContent = data.product.title;
+        this.img.setAttribute('src', `${data.cdn}${data.product.image}`);
+        this.price.textContent = price;
+
+        this.category.className = ModalViewCardFull.categoryClassList.base;
+        this.category.classList.add(ModalViewCardFull.categoryClassList[data.product.category]);
+
+        return this.container;
     }
 }
