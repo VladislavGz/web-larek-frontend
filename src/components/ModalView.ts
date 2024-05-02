@@ -42,12 +42,16 @@ export class ModalViewCardFull extends ModalView {
         this.addBasketBtn = this.container.querySelector('.button') as HTMLButtonElement;
         this.closeBtn = this.container.querySelector('.modal__close') as HTMLButtonElement;
 
-        this.addBasketBtn.addEventListener('click', () => {
-            this.events.emit('ui:modal-card-addBasket', {id: this.id});
-        });
+        this.container.addEventListener('click', evt => {
+            if (evt.target === this.container || evt.target === this.closeBtn) {
+                this.events.emit('ui:modal-card-closeModel', {});
+                return;
+            }
 
-        this.closeBtn.addEventListener('click', () => {
-            this.events.emit('ui:modal-card-closeModel', {});
+            if (evt.target === this.addBasketBtn) {
+                this.events.emit('ui:modal-card-addBasket', {id: this.id});
+                return;
+            }
         })
     }
 }
