@@ -2,8 +2,17 @@ import { IEventEmitter, IView } from "../types";
 
 abstract class ModalView implements IView {
 
-    constructor(protected container: HTMLElement, protected events: IEventEmitter) {
+    protected closeBtn: HTMLButtonElement;
 
+    constructor(protected container: HTMLElement, protected events: IEventEmitter) {
+        this.closeBtn = this.container.querySelector('.modal__close') as HTMLButtonElement;
+
+        this.container.addEventListener('click', evt => {
+            if (evt.target === this.container || evt.target === this.closeBtn) {
+                this.events.emit('ui:modal-card-closeModel', {});
+                return;
+            }
+        });
     }
 
     render(data?: object): HTMLElement {
@@ -27,7 +36,6 @@ export class ModalViewCardFull extends ModalView {
     protected description: HTMLParagraphElement;
     protected price: HTMLSpanElement;
     protected addBasketBtn: HTMLButtonElement;
-    protected closeBtn: HTMLButtonElement;
 
     protected id: string | null = null;
 
@@ -40,18 +48,9 @@ export class ModalViewCardFull extends ModalView {
         this.description = this.container.querySelector('.card__text') as HTMLParagraphElement;
         this.price = this.container.querySelector('.card__price') as HTMLSpanElement;
         this.addBasketBtn = this.container.querySelector('.button') as HTMLButtonElement;
-        this.closeBtn = this.container.querySelector('.modal__close') as HTMLButtonElement;
 
-        this.container.addEventListener('click', evt => {
-            if (evt.target === this.container || evt.target === this.closeBtn) {
-                this.events.emit('ui:modal-card-closeModel', {});
-                return;
-            }
-
-            if (evt.target === this.addBasketBtn) {
-                this.events.emit('ui:modal-card-addBasket', {id: this.id});
-                return;
-            }
-        })
+        this.addBasketBtn.addEventListener('click', () => {
+            this.events.emit('ui:modal-card-addBasket', {id: this.id});
+        });
     }
 }
