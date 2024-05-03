@@ -1,7 +1,7 @@
-import { IUserModel } from "../types";
+import { IUserModel, TPaymentMethod } from "../types";
 
 export class UserModel implements IUserModel {
-    private _paymentMethod: string;
+    private _paymentMethod: TPaymentMethod;
     private _address: string;
     private _email: string;
     private _phone: string;
@@ -13,10 +13,10 @@ export class UserModel implements IUserModel {
         this._phone = '';
     }
 
-    get paymentMethod(): string {
+    get paymentMethod(): TPaymentMethod {
         return this._paymentMethod;
     }
-    set paymentMethod(method: string) {
+    set paymentMethod(method: TPaymentMethod) {
         this._paymentMethod = method;
     }
 
