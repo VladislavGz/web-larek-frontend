@@ -32,9 +32,11 @@ export interface IBasketModel {
     getItems(): TBasketItems;
 }
 
+export type TPaymentMethod = 'cash' | 'card';
+
 export interface IUserModel {
-    get paymentMethod(): string;
-    set paymentMethod(method: string);
+    get paymentMethod(): TPaymentMethod;
+    set paymentMethod(method: TPaymentMethod);
     get address(): string;
     set address(address: string);
     get email(): string;
