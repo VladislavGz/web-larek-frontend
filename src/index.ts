@@ -1,5 +1,7 @@
 import { BasketIconView } from './components/BasketIconView';
+import { BasketItemView } from './components/BasketItemView';
 import { BasketModel } from './components/BasketModel';
+import { BasketView } from './components/BasketView';
 import { CardCatalogView, CardFullView } from './components/CardView';
 import { CatalogModel } from './components/CatalogModel';
 import { CatalogView } from './components/CatalogView';
@@ -7,7 +9,7 @@ import { ModalView } from './components/ModalView';
 import { Api } from './components/base/api';
 import { EventEmitter } from './components/base/events';
 import './scss/styles.scss';
-import { IBasketModel, IProductModel, TBasketItem, } from './types';
+import { IBasketModel, IProductModel, TBasketItem, TBasketItems, } from './types';
 import { API_URL, CDN_URL } from './utils/constants';
 import { cloneTemplate } from './utils/utils';
 
@@ -15,6 +17,8 @@ import { cloneTemplate } from './utils/utils';
 //шаблоны
 const catalogItemTemplate = document.querySelector('#card-catalog') as HTMLTemplateElement;
 const cardFullTemplate = document.querySelector('#card-preview') as HTMLTemplateElement;
+const basketTemplate = document.querySelector('#basket') as HTMLTemplateElement;
+const basketItemTemplate = document.querySelector('#card-basket') as HTMLTemplateElement;
 
 //базовые компоненты
 const api = new Api(API_URL);
@@ -29,6 +33,7 @@ const catalog = new CatalogView(document.querySelector('.gallery'), events);
 const modal = new ModalView(document.querySelector('#modal-container'), events);
 const cardFull = new CardFullView(cloneTemplate(cardFullTemplate), events);
 const basketIcon = new BasketIconView(document.querySelector('.header__basket'), events);
+const basket = new BasketView(cloneTemplate(basketTemplate), events);
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //событие изменения модели каталога товаров
@@ -67,15 +72,25 @@ events.on('ui:cardFull-addBasket', (data: {id: string}) => {
 });
 
 //событие изменения содержимого корзины
-events.on('basket:change', (basket: IBasketModel) => {
-    console.log(`EVT: basket:change | count: ${basket.count}`);
+events.on('basket:change', (data: TBasketItems) => {
+    console.log(`EVT: basket:change | count: ${basketModel.count}`);
 
-    basketIcon.render({count: basket.count});
+    basketIcon.render({count: basketModel.count});
+
+    const itemsContainers = Object.values(data).map((item, i) => {
+        return new BasketItemView(cloneTemplate(basketItemTemplate), events).render({product: item, index: i + 1});
+    })
+
+    basket.render({items: itemsContainers})
 });
 
 //событие клика по иконке корзины
 events.on('ui:basketIcon-openBasket', () => {
     console.log(`EVT: ui:basketIcon-openBasket`);
+
+    const basketContainer = basket.render(null);
+    modal.render(basketContainer);
+    modal.open();
 });
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
