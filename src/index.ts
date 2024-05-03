@@ -1,4 +1,4 @@
-import { CardCatalogView } from './components/CardView';
+import { CardCatalogView, CardFullView } from './components/CardView';
 import { CatalogModel } from './components/CatalogModel';
 import { CatalogView } from './components/CatalogView';
 import { ModalView } from './components/ModalView';
@@ -12,6 +12,7 @@ import { cloneTemplate } from './utils/utils';
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //шаблоны
 const catalogItemTemplate = document.querySelector('#card-catalog') as HTMLTemplateElement;
+const cardFullTemplate = document.querySelector('#card-preview') as HTMLTemplateElement;
 
 //базовые компоненты
 const api = new Api(API_URL);
@@ -23,6 +24,7 @@ const catalogModel = new CatalogModel(events);
 //отображения
 const catalog = new CatalogView(document.querySelector('.gallery'), events);
 const modal = new ModalView(document.querySelector('#modal-container'), events);
+const cardFull = new CardFullView(cloneTemplate(cardFullTemplate), events);
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //событие изменения модели каталога товаров
@@ -40,7 +42,8 @@ events.on('catalog:change', (data: { items: IProductModel[] }) => {
 events.on('ui:catalog-item-open', (data: { id: string }) => {
     console.log(`EVT: ui:catalog-item-open | id: ${data.id}`);
 
-    modal.render({product: catalogModel.getProductById(data.id), cdn: CDN_URL});
+    const cardContainer = cardFull.render({product: catalogModel.getProductById(data.id), cdn: CDN_URL});
+    modal.render(cardContainer)
     modal.open();
 })
 
@@ -52,8 +55,8 @@ events.on('ui:modal-closeModal', () => {
 });
 
 //событие клика по кнопке добавления товара в корзину
-events.on('ui:modal-card-addBasket', (data: {id: string}) => {
-    console.log(`EVT: ui:modal-card-addBasket | id: ${data.id}`);
+events.on('ui:cardFull-addBasket', (data: {id: string}) => {
+    console.log(`EVT: ui:cardFull-addBasket | id: ${data.id}`);
 })
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
