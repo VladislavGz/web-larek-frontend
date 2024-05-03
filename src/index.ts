@@ -93,6 +93,13 @@ events.on('ui:basketIcon-openBasket', () => {
     modal.open();
 });
 
+//событие клика по кнопке удаления товара из корзины
+events.on('ui:basket-remove-item', (data: {id: string}) => {
+    console.log(`EVT: ui:basket-remove-item | id: ${data.id}`);
+
+    basketModel.removeProduct(data.id);
+});
+
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //запрашиваем данные всех товаров с сервера
 api.get('/product')
