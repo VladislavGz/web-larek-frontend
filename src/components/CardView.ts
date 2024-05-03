@@ -73,8 +73,11 @@ export class CardFullView extends CardView {
     }
 
     override render(data: {product: IProductModel, cdn: string}): HTMLElement {
-        super.render(data);
-        this.description.textContent = data.product.description;
+        if (data) {
+            super.render(data);
+            this.description.textContent = data.product.description;
+        }
+        
         return this.container;
     }
 }
