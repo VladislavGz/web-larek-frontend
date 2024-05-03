@@ -9,7 +9,7 @@ import { ModalView } from './components/ModalView';
 import { Api } from './components/base/api';
 import { EventEmitter } from './components/base/events';
 import './scss/styles.scss';
-import { IBasketModel, IProductModel, TBasketItem, TBasketItems, } from './types';
+import { IProductModel, TBasketItem, TBasketItems, } from './types';
 import { API_URL, CDN_URL } from './utils/constants';
 import { cloneTemplate } from './utils/utils';
 
@@ -41,17 +41,17 @@ events.on('catalog:change', (data: { items: IProductModel[] }) => {
     console.log('EVT: catalog:change')
 
     let itemsContainers = data.items.map(item => {
-        return new CardCatalogView(cloneTemplate(catalogItemTemplate), events).render({product: item, cdn: CDN_URL});
+        return new CardCatalogView(cloneTemplate(catalogItemTemplate), events).render({ product: item, cdn: CDN_URL });
     })
 
-    catalog.render({items: itemsContainers});
+    catalog.render({ items: itemsContainers });
 });
 
 //событие клика на карточку товара в каталоге
 events.on('ui:catalog-item-open', (data: { id: string }) => {
     console.log(`EVT: ui:catalog-item-open | id: ${data.id}`);
 
-    const cardContainer = cardFull.render({product: catalogModel.getProductById(data.id), cdn: CDN_URL});
+    const cardContainer = cardFull.render({ product: catalogModel.getProductById(data.id), cdn: CDN_URL });
     modal.render(cardContainer)
     modal.open();
 })
@@ -64,7 +64,7 @@ events.on('ui:modal-closeModal', () => {
 });
 
 //событие клика по кнопке добавления товара в корзину
-events.on('ui:cardFull-addBasket', (data: {id: string}) => {
+events.on('ui:cardFull-addBasket', (data: { id: string }) => {
     console.log(`EVT: ui:cardFull-addBasket | id: ${data.id}`);
 
     const product: TBasketItem = catalogModel.getProductById(data.id);
@@ -75,13 +75,13 @@ events.on('ui:cardFull-addBasket', (data: {id: string}) => {
 events.on('basket:change', (data: TBasketItems) => {
     console.log(`EVT: basket:change | count: ${basketModel.count}`);
 
-    basketIcon.render({count: basketModel.count});
+    basketIcon.render({ count: basketModel.count });
 
     const itemsContainers = Object.values(data).map((item, i) => {
-        return new BasketItemView(cloneTemplate(basketItemTemplate), events).render({product: item, index: i + 1});
+        return new BasketItemView(cloneTemplate(basketItemTemplate), events).render({ product: item, index: i + 1 });
     })
 
-    basket.render({items: itemsContainers})
+    basket.render({ items: itemsContainers })
 });
 
 //событие клика по иконке корзины
