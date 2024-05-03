@@ -16,9 +16,10 @@ export class BasketView implements IView {
         });
     }
 
-    render(data: { items: HTMLElement[] }): HTMLElement {
+    render(data: { items: HTMLElement[], totalCost: number }): HTMLElement {
         if (data) {
             this.basketList.replaceChildren(...data.items);
+            this.totalPrice.textContent = `${data.totalCost}`;
         }
 
         return this.container;
