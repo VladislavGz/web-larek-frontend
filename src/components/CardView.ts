@@ -1,15 +1,13 @@
 import { IEventEmitter, IProductModel, IView } from "../types";
 
-export class CatalogItemView implements IView {
+abstract class CardView implements IView {
 
     protected category: HTMLSpanElement;
     protected title: HTMLHeadingElement;
     protected img: HTMLImageElement;
     protected price: HTMLSpanElement;
 
-    protected id: string | null = null;
-
-    private static categoryClassList: {
+    protected static categoryClassList: {
         [category: string]: string;
     } = {
         base: 'card__category',
@@ -20,15 +18,13 @@ export class CatalogItemView implements IView {
         'кнопка': 'card__category_button'
     }
 
-    constructor(protected container: HTMLButtonElement, protected events: IEventEmitter) {
+    protected id: string | null = null;
+
+    constructor(protected container: HTMLElement, protected events: IEventEmitter) {
         this.category = this.container.querySelector('.card__category') as HTMLSpanElement;
         this.title = this.container.querySelector('.card__title') as HTMLHeadingElement;
         this.img = this.container.querySelector('.card__image') as HTMLImageElement;
         this.price = this.container.querySelector('.card__price') as HTMLSpanElement;
-
-        this.container.addEventListener('click', () => {
-            this.events.emit('ui:catalog-item-open', {id: this.id})
-        })
     }
 
     render(data: {product: IProductModel, cdn: string}): HTMLElement {
@@ -41,10 +37,44 @@ export class CatalogItemView implements IView {
             this.img.setAttribute('src', `${data.cdn}${data.product.image}`);
             this.price.textContent = price;
 
-            this.category.className = CatalogItemView.categoryClassList.base;
-            this.category.classList.add(CatalogItemView.categoryClassList[data.product.category]);
+            this.category.className = CardView.categoryClassList.base;
+            this.category.classList.add(CardView.categoryClassList[data.product.category]);
         }
 
+        return this.container;
+    }
+}
+
+export class CardCatalogView extends CardView {
+
+    constructor(container: HTMLButtonElement, events: IEventEmitter) {
+        super(container, events);
+
+        this.container.addEventListener('click', () => {
+            this.events.emit('ui:catalog-item-open', {id: this.id})
+        })
+    }
+}
+
+export class CardFullView extends CardView {
+
+    protected description: HTMLParagraphElement;
+    protected addBasketBtn: HTMLButtonElement;
+
+    constructor(container: HTMLElement, events: IEventEmitter) {
+        super(container, events);
+
+        this.description = this.container.querySelector('.card__text') as HTMLParagraphElement;
+        this.addBasketBtn = this.container.querySelector('.button') as HTMLButtonElement;
+
+        this.addBasketBtn.addEventListener('click', () => {
+            this.events.emit('ui:modal-card-addBasket', {id: this.id});
+        });
+    }
+
+    override render(data: {product: IProductModel, cdn: string}): HTMLElement {
+        super.render(data);
+        this.description.textContent = data.product.description;
         return this.container;
     }
 }
