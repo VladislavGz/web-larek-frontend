@@ -81,7 +81,7 @@ events.on('basket:change', (data: TBasketItems) => {
         return new BasketItemView(cloneTemplate(basketItemTemplate), events).render({ product: item, index: i + 1 });
     })
 
-    basket.render({ items: itemsContainers })
+    basket.render({ items: itemsContainers, totalCost: basketModel.totalCost });
 });
 
 //событие клика по иконке корзины
@@ -98,6 +98,11 @@ events.on('ui:basket-remove-item', (data: {id: string}) => {
     console.log(`EVT: ui:basket-remove-item | id: ${data.id}`);
 
     basketModel.removeProduct(data.id);
+});
+
+//событие клика по кнопке оформления заказа
+events.on('ui:basket-order', () => {
+    console.log(`EVT: ui:basket-order`);
 });
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
