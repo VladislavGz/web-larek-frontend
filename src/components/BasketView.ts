@@ -18,7 +18,7 @@ export class BasketView implements IView {
 
     render(data: { items: HTMLElement[] }): HTMLElement {
         if (data) {
-            this.container.replaceChildren(...data.items);
+            this.basketList.replaceChildren(...data.items);
         }
 
         return this.container;
