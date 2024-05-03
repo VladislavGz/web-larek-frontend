@@ -2,9 +2,11 @@ import { IEventEmitter, IView } from "../types";
 
 export class ModalView implements IView {
 
+    protected contentContainer: HTMLDivElement;
     protected closeBtn: HTMLButtonElement;
 
     constructor(protected container: HTMLElement, protected events: IEventEmitter) {
+        this.contentContainer = this.container.querySelector('.modal__content') as HTMLDivElement;
         this.closeBtn = this.container.querySelector('.modal__close') as HTMLButtonElement;
 
         this.container.addEventListener('click', evt => {
@@ -15,7 +17,8 @@ export class ModalView implements IView {
         });
     }
 
-    render(data?: object): HTMLElement {
+    render(data: HTMLElement): HTMLElement {
+        this.contentContainer.replaceChildren(data);
         return this.container;
     }
 
