@@ -1,4 +1,4 @@
-import { CatalogItemView } from './components/CatalogItemView';
+import { CatalogItemView } from './components/CardView';
 import { CatalogModel } from './components/CatalogModel';
 import { CatalogView } from './components/CatalogView';
 import { ModalViewCardFull } from './components/ModalView';
