@@ -45,8 +45,8 @@ events.on('ui:catalog-item-open', (data: { id: string }) => {
 })
 
 //событие закрытия модального окна товара
-events.on('ui:modal-card-closeModel', () => {
-    console.log('EVT: ui:modal-card-closeModel');
+events.on('ui:modal-closeModal', () => {
+    console.log('EVT: ui:modal-closeModal');
 
     modal.close();
 });
