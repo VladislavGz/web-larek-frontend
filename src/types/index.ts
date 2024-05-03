@@ -32,6 +32,17 @@ export interface IBasketModel {
     getItems(): TBasketItems;
 }
 
+export interface IUserModel {
+    get paymentMethod(): string;
+    set paymentMethod(method: string);
+    get address(): string;
+    set address(address: string);
+    get email(): string;
+    set email(email: string);
+    get phone(): string;
+    set phone(phone: string);
+}
+
 export interface IEventEmitter {
     emit: (event: string, data: unknown) => void;
 }
