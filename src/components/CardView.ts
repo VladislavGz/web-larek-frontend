@@ -68,7 +68,7 @@ export class CardFullView extends CardView {
         this.addBasketBtn = this.container.querySelector('.button') as HTMLButtonElement;
 
         this.addBasketBtn.addEventListener('click', () => {
-            this.events.emit('ui:modal-card-addBasket', {id: this.id});
+            this.events.emit('ui:cardFull-addBasket', {id: this.id});
         });
     }
 
