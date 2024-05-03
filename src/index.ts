@@ -1,7 +1,7 @@
-import { CatalogItemView } from './components/CardView';
+import { CardCatalogView } from './components/CardView';
 import { CatalogModel } from './components/CatalogModel';
 import { CatalogView } from './components/CatalogView';
-import { ModalViewCardFull } from './components/ModalView';
+import { ModalView } from './components/ModalView';
 import { Api } from './components/base/api';
 import { EventEmitter } from './components/base/events';
 import './scss/styles.scss';
@@ -22,7 +22,7 @@ const catalogModel = new CatalogModel(events);
 
 //отображения
 const catalog = new CatalogView(document.querySelector('.gallery'), events);
-const modalCard = new ModalViewCardFull(document.querySelector('#modal-card-full'), events);
+const modal = new ModalView(document.querySelector('#modal-container'), events);
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //событие изменения модели каталога товаров
@@ -30,7 +30,7 @@ events.on('catalog:change', (data: { items: IProductModel[] }) => {
     console.log('EVT: catalog:change')
 
     let itemsContainers = data.items.map(item => {
-        return new CatalogItemView(cloneTemplate(catalogItemTemplate), events).render({product: item, cdn: CDN_URL});
+        return new CardCatalogView(cloneTemplate(catalogItemTemplate), events).render({product: item, cdn: CDN_URL});
     })
 
     catalog.render({items: itemsContainers});
@@ -40,15 +40,15 @@ events.on('catalog:change', (data: { items: IProductModel[] }) => {
 events.on('ui:catalog-item-open', (data: { id: string }) => {
     console.log(`EVT: ui:catalog-item-open | id: ${data.id}`);
 
-    modalCard.render({product: catalogModel.getProductById(data.id), cdn: CDN_URL});
-    modalCard.open();
+    modal.render({product: catalogModel.getProductById(data.id), cdn: CDN_URL});
+    modal.open();
 })
 
 //событие закрытия модального окна товара
 events.on('ui:modal-card-closeModel', () => {
     console.log('EVT: ui:modal-card-closeModel');
 
-    modalCard.close();
+    modal.close();
 });
 
 //событие клика по кнопке добавления товара в корзину
