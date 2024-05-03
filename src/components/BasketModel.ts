@@ -21,6 +21,8 @@ export class BasketModel implements IBasketModel {
     }
 
     addProduct(item: TBasketItem): void {
+        if (this.items[item.id]) return;
+
         this.items[item.id] = item;
         this._changed();
     }
