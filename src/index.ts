@@ -73,6 +73,11 @@ events.on('basket:change', (basket: IBasketModel) => {
     basketIcon.render({count: basket.count});
 });
 
+//событие клика по иконке корзины
+events.on('ui:basketIcon-openBasket', () => {
+    console.log(`EVT: ui:basketIcon-openBasket`);
+});
+
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //запрашиваем данные всех товаров с сервера
 api.get('/product')

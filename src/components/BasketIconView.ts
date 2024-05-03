@@ -8,7 +8,7 @@ export class BasketIconView implements IView {
         this.counter = this.container.querySelector('.header__basket-counter') as HTMLSpanElement;
 
         this.container.addEventListener('click', () => {
-            this.events.emit('ui: basketIcon-openBasket', {});
+            this.events.emit('ui:basketIcon-openBasket', {});
         });
     }
 
