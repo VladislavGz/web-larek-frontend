@@ -1,3 +1,4 @@
+import { BasketModel } from './components/BasketModel';
 import { CardCatalogView, CardFullView } from './components/CardView';
 import { CatalogModel } from './components/CatalogModel';
 import { CatalogView } from './components/CatalogView';
@@ -5,7 +6,7 @@ import { ModalView } from './components/ModalView';
 import { Api } from './components/base/api';
 import { EventEmitter } from './components/base/events';
 import './scss/styles.scss';
-import { IProductModel } from './types';
+import { IProductModel, TBasketItem, TBasketItems } from './types';
 import { API_URL, CDN_URL } from './utils/constants';
 import { cloneTemplate } from './utils/utils';
 
@@ -20,6 +21,7 @@ const events = new EventEmitter();
 
 //модели
 const catalogModel = new CatalogModel(events);
+const basketModel = new BasketModel(events);
 
 //отображения
 const catalog = new CatalogView(document.querySelector('.gallery'), events);
@@ -57,7 +59,16 @@ events.on('ui:modal-closeModal', () => {
 //событие клика по кнопке добавления товара в корзину
 events.on('ui:cardFull-addBasket', (data: {id: string}) => {
     console.log(`EVT: ui:cardFull-addBasket | id: ${data.id}`);
-})
+
+    const product: TBasketItem = catalogModel.getProductById(data.id);
+    basketModel.addProduct(product);
+});
+
+//событие изменения содержимого корзины
+events.on('basket:change', (data: TBasketItems) => {
+    console.log(`EVT: basket:change`);
+    console.log(data)
+});
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //запрашиваем данные всех товаров с сервера
