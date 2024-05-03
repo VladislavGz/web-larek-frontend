@@ -22,13 +22,14 @@ export type TBasketItems = {
 
 export interface IBasketModel {
     items: TBasketItems;
-    totalCost: number;
+
+    get count(): number;
+    get totalCost(): number;
 
     addProduct(item: TBasketItem): void;
     removeProduct(id: string): void;
     clear(): void;
     getItems(): TBasketItems;
-    calculateCost(): number;
 }
 
 export interface IEventEmitter {
