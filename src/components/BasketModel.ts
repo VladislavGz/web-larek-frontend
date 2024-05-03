@@ -42,6 +42,6 @@ export class BasketModel implements IBasketModel {
     }
 
     protected _changed() {
-        this.events.emit('basket:change', this);
+        this.events.emit('basket:change', this.getItems());
     }
 }
