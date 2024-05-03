@@ -29,7 +29,7 @@ abstract class CardView implements IView {
 
     render(data: {product: IProductModel, cdn: string}): HTMLElement {
         if (data) {
-            const price = data.product.price ? `${data.product.price}` : 'Бесценно';
+            const price = data.product.price ? `${data.product.price} синапсов` : 'Бесценно';
 
             this.id = data.product.id;
             this.category.textContent = data.product.category;

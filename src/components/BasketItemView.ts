@@ -23,7 +23,7 @@ export class BasketItemView implements IView {
 
     render(data: {product: TBasketItem, index: number}): HTMLElement {
         if (data) {
-            const price = data.product.price ? `${data.product.price}` : 'Бесценно';
+            const price = data.product.price ? `${data.product.price} синапсов` : 'Бесценно';
             
             this.id = data.product.id;
             this.title.textContent = data.product.title;
