@@ -1,6 +1,6 @@
-import { IEventEmitter, IProductModel, IView } from "../types";
+import { IEventEmitter, IView } from "../types";
 
-abstract class ModalView implements IView {
+export class ModalView implements IView {
 
     protected closeBtn: HTMLButtonElement;
 
@@ -9,7 +9,7 @@ abstract class ModalView implements IView {
 
         this.container.addEventListener('click', evt => {
             if (evt.target === this.container || evt.target === this.closeBtn) {
-                this.events.emit('ui:modal-card-closeModel', {});
+                this.events.emit('ui:modal-closeModal', {});
                 return;
             }
         });
