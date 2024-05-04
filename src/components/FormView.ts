@@ -41,12 +41,12 @@ export class FormOrderView extends FormView {
 
     constructor(container: HTMLFormElement, events: IEventEmitter) {
         super(container, events);
-        this.orderButtonCard = this.container.elements.namedItem('online') as HTMLButtonElement;
+        this.orderButtonCard = this.container.elements.namedItem('card') as HTMLButtonElement;
         this.orderButtonCash = this.container.elements.namedItem('cash') as HTMLButtonElement;
         this.addressInput = this.container.elements.namedItem('address') as HTMLInputElement;
 
         this.orderButtonCard.addEventListener('click', () => {
-            this.events.emit('ui:orderForm-paymentMethodButton', {paymentMethod: 'card'});
+            this.events.emit('ui:orderForm-paymentMethodButton', {paymentMethod: 'online'});
         });
 
         this.orderButtonCash.addEventListener('click', () => {
