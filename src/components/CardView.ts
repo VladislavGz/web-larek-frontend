@@ -72,10 +72,21 @@ export class CardFullView extends CardView {
         });
     }
 
+    enableAddButton() {
+        this.addBasketBtn.removeAttribute('disabled');
+    }
+
+    disableAddButton() {
+        this.addBasketBtn.setAttribute('disabled', '');
+    }
+
     override render(data: {product: IProductModel, cdn: string}): HTMLElement {
         if (data) {
             super.render(data);
             this.description.textContent = data.product.description;
+            console.log(data)
+            if (!data.product.price) {this.disableAddButton()}
+            else {this.enableAddButton()}
         }
         
         return this.container;
