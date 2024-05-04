@@ -49,7 +49,8 @@ export class FormOrderView extends FormView {
             this.events.emit('ui:orderForm-addressInput', {});
         })
 
-        this.container.addEventListener('submit', () => {
+        this.container.addEventListener('submit', evt => {
+            evt.preventDefault();
             this.events.emit('ui:orderForm-submit', {});
         });
     }
