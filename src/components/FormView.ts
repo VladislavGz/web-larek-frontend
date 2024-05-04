@@ -48,6 +48,10 @@ export class FormOrderView extends FormView {
         this.addressInput.addEventListener('input', () => {
             this.events.emit('ui:orderForm-addressInput', {});
         })
+
+        this.container.addEventListener('submit', () => {
+            this.events.emit('ui:orderForm-submit', {});
+        });
     }
 
     setPaymentMethod(method: string): void {
