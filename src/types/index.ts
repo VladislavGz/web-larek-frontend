@@ -59,6 +59,11 @@ export interface IUserModel {
     set phone(phone: string);
 }
 
+export type OrderData = {
+    id: string,
+    total: number
+}
+
 export interface IEventEmitter {
     emit: (event: string, data: unknown) => void;
 }
