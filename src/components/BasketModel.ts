@@ -43,7 +43,7 @@ export class BasketModel implements IBasketModel {
 
     getBasketOrderData(): TBasketOrderData {
         return {
-            total: `${this.totalCost}`,
+            total: this.totalCost,
             items: Object.keys(this.items)
         }
     }
