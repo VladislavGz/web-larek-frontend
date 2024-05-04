@@ -7,11 +7,12 @@ import { CatalogModel } from './components/CatalogModel';
 import { CatalogView } from './components/CatalogView';
 import { FormContactsView, FormOrderView } from './components/FormView';
 import { ModalView } from './components/ModalView';
+import { SuccessView } from './components/SuccessView';
 import { UserModel } from './components/UserModel';
 import { Api } from './components/base/api';
 import { EventEmitter } from './components/base/events';
 import './scss/styles.scss';
-import { IProductModel, TBasketItem, TBasketItems, TPaymentMethod, TUserData, } from './types';
+import { IProductModel, OrderData, TBasketItem, TBasketItems, TPaymentMethod, TUserData, } from './types';
 import { API_URL, CDN_URL } from './utils/constants';
 import { cloneTemplate } from './utils/utils';
 
@@ -23,6 +24,7 @@ const basketTemplate = document.querySelector('#basket') as HTMLTemplateElement;
 const basketItemTemplate = document.querySelector('#card-basket') as HTMLTemplateElement;
 const orderTemplate = document.querySelector('#order') as HTMLTemplateElement;
 const contactsTemplate = document.querySelector('#contacts') as HTMLTemplateElement;
+const successTemplate = document.querySelector('#success') as HTMLTemplateElement;
 
 //базовые компоненты
 const api = new Api(API_URL);
@@ -41,6 +43,7 @@ const basketIcon = new BasketIconView(document.querySelector('.header__basket'),
 const basket = new BasketView(cloneTemplate(basketTemplate), events);
 const orderForm = new FormOrderView(cloneTemplate(orderTemplate), events);
 const contactsForm = new FormContactsView(cloneTemplate(contactsTemplate), events);
+const success = new SuccessView(cloneTemplate(successTemplate), events);
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //событие изменения модели каталога товаров
@@ -155,12 +158,12 @@ events.on('ui:contactsForm-phoneInput', (data: {phone: string}) => {
 events.on('ui:contactsForm-submit', () => {
     console.log(`EVT: ui:contactsForm-submit`);
 
-    /*api.post('/order', {
+    api.post('/order', {
         ...userModel.getUserData(),
         ...basketModel.getBasketOrderData()
-    }).then(res => {
-        console.log(res)
-    })*/
+    }).then((result: OrderData) => {
+        modal.render(success.render({total: result.total}))
+    })
 });
 
 //событие изменения данных пользователя
@@ -170,6 +173,12 @@ events.on('user:change', (userData: TUserData) => {
     orderForm.render(userData);
     contactsForm.render(userData);
 });
+
+//событие клика по кнопке успешного завершения заказа
+events.on('ui:successButton', () => {
+    basketModel.clear();
+    modal.close();
+})
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //запрашиваем данные всех товаров с сервера
