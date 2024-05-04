@@ -110,7 +110,7 @@ events.on('ui:basket-remove-item', (data: {id: string}) => {
 events.on('ui:basket-order', () => {
     console.log(`EVT: ui:basket-order`);
 
-    modal.render(orderForm.render());
+    modal.render(orderForm.render(userModel.getUserData()));
 });
 
 //событие клика по кнопке выбора способа оплаты
@@ -120,9 +120,9 @@ events.on('ui:orderForm-paymentMethodButton', (data: {paymentMethod: TPaymentMet
 });
 
 //событие инпута поле ввода адреса доставки
-events.on('ui:orderForm-addressInput', () => {
-    console.log(`EVT: ui:orderForm-addressInput`);
-    //userModel.address
+events.on('ui:orderForm-addressInput', (data: {address: string}) => {
+    console.log(`EVT: ui:orderForm-addressInput | address: ${data.address}`);
+    userModel.address = data.address;
 });
 
 //событие сабмита формы заказа
