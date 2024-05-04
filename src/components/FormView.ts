@@ -10,6 +10,14 @@ abstract class FormView implements IView {
         this.submitBtn = this.container.querySelector('.submit-button') as HTMLButtonElement;
     }
 
+    enableSubmitButton() {
+        this.submitBtn.removeAttribute('disabled');
+    }
+
+    disableSubmitButton() {
+        this.submitBtn.setAttribute('disabled', 'true');
+    }
+
     render(data?: object): HTMLElement {
         return this.container;
     }
