@@ -58,12 +58,12 @@ events.on('catalog:change', (data: { items: IProductModel[] }) => {
 events.on('ui:catalog-item-open', (data: { id: string }) => {
     console.log(`EVT: ui:catalog-item-open | id: ${data.id}`);
 
-    const cardContainer = cardFull.render({ product: catalogModel.getProductById(data.id), cdn: CDN_URL });
+    const cardContainer = cardFull.render({ product: catalogModel.getProductById(data.id), cdn: CDN_URL, inBasket: basketModel.checkProductById(data.id) });
     modal.render(cardContainer)
     modal.open();
 })
 
-//событие закрытия модального окна товара
+//событие закрытия модального окна
 events.on('ui:modal-closeModal', () => {
     console.log('EVT: ui:modal-closeModal');
 
@@ -74,8 +74,14 @@ events.on('ui:modal-closeModal', () => {
 events.on('ui:cardFull-addBasket', (data: { id: string }) => {
     console.log(`EVT: ui:cardFull-addBasket | id: ${data.id}`);
 
-    const product: TBasketItem = catalogModel.getProductById(data.id);
-    basketModel.addProduct(product);
+    if (basketModel.checkProductById(data.id)) {
+        basketModel.removeProduct(data.id);
+    } else {
+        const product: TBasketItem = catalogModel.getProductById(data.id);
+        basketModel.addProduct(product);
+    }
+    
+    modal.close();
 });
 
 //событие изменения содержимого корзины
@@ -149,7 +155,12 @@ events.on('ui:contactsForm-phoneInput', (data: {phone: string}) => {
 events.on('ui:contactsForm-submit', () => {
     console.log(`EVT: ui:contactsForm-submit`);
 
-    
+    /*api.post('/order', {
+        ...userModel.getUserData(),
+        ...basketModel.getBasketOrderData()
+    }).then(res => {
+        console.log(res)
+    })*/
 });
 
 //событие изменения данных пользователя
