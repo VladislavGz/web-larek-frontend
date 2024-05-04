@@ -1,4 +1,4 @@
-import { IBasketModel, IEventEmitter, TBasketItem, TBasketItems } from "../types";
+import { IBasketModel, IEventEmitter, TBasketItem, TBasketItems, TBasketOrderData } from "../types";
 
 export class BasketModel implements IBasketModel {
     items: TBasketItems;
@@ -39,6 +39,13 @@ export class BasketModel implements IBasketModel {
 
     getItems(): TBasketItems {
         return this.items;
+    }
+
+    getBasketOrderData(): TBasketOrderData {
+        return {
+            total: `${this.totalCost}`,
+            items: Object.keys(this.items)
+        }
     }
 
     protected _changed() {
