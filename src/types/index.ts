@@ -20,6 +20,11 @@ export type TBasketItems = {
     [id: string]: TBasketItem
 }
 
+export type TBasketOrderData = {
+    total: string;
+    items: string[];
+}
+
 export interface IBasketModel {
     items: TBasketItems;
 
@@ -30,6 +35,7 @@ export interface IBasketModel {
     removeProduct(id: string): void;
     clear(): void;
     getItems(): TBasketItems;
+    getBasketOrderData(): TBasketOrderData;
 }
 
 export type TPaymentMethod = 'cash' | 'online' | '';
