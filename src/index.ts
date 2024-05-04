@@ -31,7 +31,7 @@ const events = new EventEmitter();
 //модели
 const catalogModel = new CatalogModel(events);
 const basketModel = new BasketModel(events);
-const userModel = new UserModel();
+const userModel = new UserModel(events);
 
 //отображения
 const catalog = new CatalogView(document.querySelector('.gallery'), events);
@@ -116,16 +116,23 @@ events.on('ui:basket-order', () => {
 //событие клика по кнопке выбора способа оплаты картой
 events.on('ui:orderForm-orderButtonCard', () => {
     console.log(`EVT: ui:orderForm-orderButtonCard`);
+    userModel.paymentMethod = 'card';
 });
 
 //событие клика по кнопке выбора способа оплаты при получении
 events.on('ui:orderForm-orderButtonCash', () => {
     console.log(`EVT: ui:orderForm-orderButtonCash`);
+    userModel.paymentMethod = 'cash';
 });
 
 //событие инпута поле ввода адреса доставки
 events.on('ui:orderForm-addressInput', () => {
     console.log(`EVT: ui:orderForm-addressInput`);
+});
+
+//событие сабмита формы заказа
+events.on('ui:orderForm-submit', () => {
+    console.log(`EVT: ui:orderForm-submit`);
 });
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
