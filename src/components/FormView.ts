@@ -36,13 +36,11 @@ export class FormOrderView extends FormView {
         this.addressInput = this.container.elements.namedItem('address') as HTMLInputElement;
 
         this.orderButtonCard.addEventListener('click', () => {
-            this.setPaymentMethod('card');
-            this.events.emit('ui:orderForm-orderButtonCard', {});
+            this.events.emit('ui:orderForm-paymentMethodButton', {paymentMethod: 'card'});
         });
 
         this.orderButtonCash.addEventListener('click', () => {
-            this.setPaymentMethod('cash');
-            this.events.emit('ui:orderForm-orderButtonCash', {});
+            this.events.emit('ui:orderForm-paymentMethodButton', {paymentMethod: 'cash'});
         });
 
         this.addressInput.addEventListener('input', () => {
@@ -55,7 +53,7 @@ export class FormOrderView extends FormView {
         });
     }
 
-    setPaymentMethod(method: string): void {
+    setPaymentMethod(method: TPaymentMethod): void {
         if (method === 'card') {
             this.orderButtonCard.classList.add('button_alt-active');
             this.orderButtonCash.classList.remove('button_alt-active');
