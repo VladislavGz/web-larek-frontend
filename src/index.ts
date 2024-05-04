@@ -11,7 +11,7 @@ import { UserModel } from './components/UserModel';
 import { Api } from './components/base/api';
 import { EventEmitter } from './components/base/events';
 import './scss/styles.scss';
-import { IProductModel, TBasketItem, TBasketItems, } from './types';
+import { IProductModel, TBasketItem, TBasketItems, TPaymentMethod, TUserData, } from './types';
 import { API_URL, CDN_URL } from './utils/constants';
 import { cloneTemplate } from './utils/utils';
 
@@ -113,26 +113,28 @@ events.on('ui:basket-order', () => {
     modal.render(orderForm.render());
 });
 
-//событие клика по кнопке выбора способа оплаты картой
-events.on('ui:orderForm-orderButtonCard', () => {
-    console.log(`EVT: ui:orderForm-orderButtonCard`);
-    userModel.paymentMethod = 'card';
-});
-
-//событие клика по кнопке выбора способа оплаты при получении
-events.on('ui:orderForm-orderButtonCash', () => {
-    console.log(`EVT: ui:orderForm-orderButtonCash`);
-    userModel.paymentMethod = 'cash';
+//событие клика по кнопке выбора способа оплаты
+events.on('ui:orderForm-paymentMethodButton', (data: {paymentMethod: TPaymentMethod}) => {
+    console.log(`EVT: ui:orderForm-paymentMethodButton | method: ${data.paymentMethod}`);
+    userModel.paymentMethod = data.paymentMethod;
 });
 
 //событие инпута поле ввода адреса доставки
 events.on('ui:orderForm-addressInput', () => {
     console.log(`EVT: ui:orderForm-addressInput`);
+    //userModel.address
 });
 
 //событие сабмита формы заказа
 events.on('ui:orderForm-submit', () => {
     console.log(`EVT: ui:orderForm-submit`);
+});
+
+//событие изменения данных пользователя
+events.on('user:change', (userData: TUserData) => {
+    console.log(`EVT: user:change`);
+
+    orderForm.render(userData)
 });
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
