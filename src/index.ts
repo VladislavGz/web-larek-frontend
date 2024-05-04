@@ -5,7 +5,7 @@ import { BasketView } from './components/BasketView';
 import { CardCatalogView, CardFullView } from './components/CardView';
 import { CatalogModel } from './components/CatalogModel';
 import { CatalogView } from './components/CatalogView';
-import { FormOrderView } from './components/FormView';
+import { FormContactsView, FormOrderView } from './components/FormView';
 import { ModalView } from './components/ModalView';
 import { UserModel } from './components/UserModel';
 import { Api } from './components/base/api';
@@ -40,6 +40,7 @@ const cardFull = new CardFullView(cloneTemplate(cardFullTemplate), events);
 const basketIcon = new BasketIconView(document.querySelector('.header__basket'), events);
 const basket = new BasketView(cloneTemplate(basketTemplate), events);
 const orderForm = new FormOrderView(cloneTemplate(orderTemplate), events);
+const contactsForm = new FormContactsView(cloneTemplate(contactsTemplate), events);
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //событие изменения модели каталога товаров
@@ -128,13 +129,35 @@ events.on('ui:orderForm-addressInput', (data: {address: string}) => {
 //событие сабмита формы заказа
 events.on('ui:orderForm-submit', () => {
     console.log(`EVT: ui:orderForm-submit`);
+
+    modal.render(contactsForm.render(userModel.getUserData()));
+});
+
+//событие инпута поле ввода email
+events.on('ui:contactsForm-emailInput', (data: {email: string}) => {
+    console.log(`EVT: ui:contactsForm-emailInput | email: ${data.email}`);
+    userModel.email = data.email;
+});
+
+//событие инпута поле ввода телефона
+events.on('ui:contactsForm-phoneInput', (data: {phone: string}) => {
+    console.log(`EVT: ui:contactsForm-phoneInput | phone: ${data.phone}`);
+    userModel.phone = data.phone;
+});
+
+//событие сабмита формы контактов
+events.on('ui:contactsForm-submit', () => {
+    console.log(`EVT: ui:contactsForm-submit`);
+
+    
 });
 
 //событие изменения данных пользователя
 events.on('user:change', (userData: TUserData) => {
     console.log(`EVT: user:change`);
 
-    orderForm.render(userData)
+    orderForm.render(userData);
+    contactsForm.render(userData);
 });
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
