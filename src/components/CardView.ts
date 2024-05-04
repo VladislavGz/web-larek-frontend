@@ -80,13 +80,24 @@ export class CardFullView extends CardView {
         this.addBasketBtn.setAttribute('disabled', '');
     }
 
-    override render(data: {product: IProductModel, cdn: string}): HTMLElement {
+    setStateAddButton(inBasket: boolean): void {
+        if (inBasket) {
+            this.addBasketBtn.textContent = 'Удалить из корзины';
+        } else {
+            this.addBasketBtn.textContent = 'В корзину';
+        }
+    }
+
+    override render(data: {product: IProductModel, cdn: string, inBasket: boolean}): HTMLElement {
         if (data) {
             super.render(data);
             this.description.textContent = data.product.description;
-            console.log(data)
-            if (!data.product.price) {this.disableAddButton()}
-            else {this.enableAddButton()}
+
+            if (!data.product.price) {this.disableAddButton();}
+            else {
+                this.enableAddButton();
+                this.setStateAddButton(data.inBasket);
+            }
         }
         
         return this.container;
