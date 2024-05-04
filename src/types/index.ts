@@ -34,6 +34,13 @@ export interface IBasketModel {
 
 export type TPaymentMethod = 'cash' | 'card' | '';
 
+export type TUserData = {
+    paymentMethod: TPaymentMethod,
+    address: string,
+    email: string,
+    phone: string,
+}
+
 export interface IUserModel {
     get paymentMethod(): TPaymentMethod;
     set paymentMethod(method: TPaymentMethod);
