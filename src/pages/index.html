@@ -226,7 +226,12 @@
 			</div>
 			<div class="modal__actions">
 				<button type="submit" disabled class="button order__button submit-button">Далее</button>
-				<span class="form__errors"></span>
+				<span
+					class="form__errors"
+					data-err-paymentMethod="Выберите способ оплаты"
+					data-err-adress="Укажите адрес доставки"
+				>
+				</span>
 			</div>
 		</form>
 	</template>
@@ -245,7 +250,12 @@
 			</div>
 			<div class="modal__actions">
 				<button type="submit" disabled class="button submit-button">Оплатить</button>
-				<span class="form__errors"></span>
+				<span
+					class="form__errors"
+					data-err-email="Укажите адрес электронной почты"
+					data-err-phone="Укажите номер телефона"
+				>
+				</span>
 			</div>
 		</form>
 	</template>
