@@ -18,6 +18,16 @@ abstract class FormView implements IView {
         this.submitBtn.setAttribute('disabled', 'true');
     }
 
+    validate(validityState: string) {
+        if (validityState) {
+            this.disableSubmitButton();
+            this.errors.textContent = this.errors.getAttribute(`${validityState}`);
+        } else {
+            this.enableSubmitButton();
+            this.errors.textContent = '';
+        }
+    }
+
     render(data?: object): HTMLElement {
         return this.container;
     }
@@ -44,7 +54,7 @@ export class FormOrderView extends FormView {
         });
 
         this.addressInput.addEventListener('input', () => {
-            this.events.emit('ui:orderForm-addressInput', {});
+            this.events.emit('ui:orderForm-addressInput', {address: this.addressInput.value});
         })
 
         this.container.addEventListener('submit', evt => {
@@ -70,10 +80,17 @@ export class FormOrderView extends FormView {
         this.orderButtonCash.classList.remove('button_alt-active');
     }
 
+    checkValidity(): string {
+        if (!(this.orderButtonCard.classList.contains('button_alt-active') || this.orderButtonCash.classList.contains('button_alt-active'))) return 'data-err-paymentMethod';
+        if(!this.addressInput.value) return 'data-err-adress';
+        return '';
+    }
+
     override render(data?: { paymentMethod: TPaymentMethod, address: string }): HTMLElement {
         if (data) {
             this.setPaymentMethod(data.paymentMethod);
             this.addressInput.value = data.address;
+            this.validate(this.checkValidity());
         }
 
         return this.container;
