@@ -41,7 +41,7 @@ export class FormOrderView extends FormView {
 
     constructor(container: HTMLFormElement, events: IEventEmitter) {
         super(container, events);
-        this.orderButtonCard = this.container.elements.namedItem('card') as HTMLButtonElement;
+        this.orderButtonCard = this.container.elements.namedItem('online') as HTMLButtonElement;
         this.orderButtonCash = this.container.elements.namedItem('cash') as HTMLButtonElement;
         this.addressInput = this.container.elements.namedItem('address') as HTMLInputElement;
 
@@ -64,7 +64,7 @@ export class FormOrderView extends FormView {
     }
 
     setPaymentMethod(method: TPaymentMethod): void {
-        if (method === 'card') {
+        if (method === 'online') {
             this.orderButtonCard.classList.add('button_alt-active');
             this.orderButtonCash.classList.remove('button_alt-active');
             return;
