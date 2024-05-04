@@ -4,7 +4,7 @@ export class BasketIconView implements IView {
 
     protected counter: HTMLSpanElement;
 
-    constructor (protected container: HTMLButtonElement, protected events: IEventEmitter) {
+    constructor(protected container: HTMLButtonElement, protected events: IEventEmitter) {
         this.counter = this.container.querySelector('.header__basket-counter') as HTMLSpanElement;
 
         this.container.addEventListener('click', () => {
@@ -12,7 +12,7 @@ export class BasketIconView implements IView {
         });
     }
 
-    render(data: {count: number}): HTMLElement {
+    render(data: { count: number }): HTMLElement {
         if (data) {
             this.counter.textContent = `${data.count}`;
         }

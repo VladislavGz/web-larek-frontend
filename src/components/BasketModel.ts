@@ -7,11 +7,11 @@ export class BasketModel implements IBasketModel {
         this.items = {};
     }
 
-    get count () {
+    get count() {
         return Object.keys(this.items).length;
     }
 
-    get totalCost () {
+    get totalCost() {
         let cost = 0;
         for (let id in this.items) {
             cost += this.items[id].price;

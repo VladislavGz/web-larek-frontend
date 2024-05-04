@@ -10,13 +10,13 @@ abstract class CardView implements IView {
     protected static categoryClassList: {
         [category: string]: string;
     } = {
-        base: 'card__category',
-        'софт-скил': 'card__category_soft',
-        'другое': 'card__category_other',
-        'дополнительное': 'card__category_additional',
-        'хард-скил': 'card__category_hard',
-        'кнопка': 'card__category_button'
-    }
+            base: 'card__category',
+            'софт-скил': 'card__category_soft',
+            'другое': 'card__category_other',
+            'дополнительное': 'card__category_additional',
+            'хард-скил': 'card__category_hard',
+            'кнопка': 'card__category_button'
+        }
 
     protected id: string | null = null;
 
@@ -27,7 +27,7 @@ abstract class CardView implements IView {
         this.price = this.container.querySelector('.card__price') as HTMLSpanElement;
     }
 
-    render(data: {product: IProductModel, cdn: string}): HTMLElement {
+    render(data: { product: IProductModel, cdn: string }): HTMLElement {
         if (data) {
             const price = data.product.price ? `${data.product.price} синапсов` : 'Бесценно';
 
@@ -51,7 +51,7 @@ export class CardCatalogView extends CardView {
         super(container, events);
 
         this.container.addEventListener('click', () => {
-            this.events.emit('ui:catalog-item-open', {id: this.id})
+            this.events.emit('ui:catalog-item-open', { id: this.id })
         })
     }
 }
@@ -68,7 +68,7 @@ export class CardFullView extends CardView {
         this.addBasketBtn = this.container.querySelector('.button') as HTMLButtonElement;
 
         this.addBasketBtn.addEventListener('click', () => {
-            this.events.emit('ui:cardFull-addBasket', {id: this.id});
+            this.events.emit('ui:cardFull-addBasket', { id: this.id });
         });
     }
 
@@ -88,18 +88,18 @@ export class CardFullView extends CardView {
         }
     }
 
-    override render(data: {product: IProductModel, cdn: string, inBasket: boolean}): HTMLElement {
+    override render(data: { product: IProductModel, cdn: string, inBasket: boolean }): HTMLElement {
         if (data) {
             super.render(data);
             this.description.textContent = data.product.description;
 
-            if (!data.product.price) {this.disableAddButton();}
+            if (!data.product.price) { this.disableAddButton(); }
             else {
                 this.enableAddButton();
                 this.setStateAddButton(data.inBasket);
             }
         }
-        
+
         return this.container;
     }
 }

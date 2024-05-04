@@ -13,7 +13,7 @@ export class CatalogModel implements ICatalogModel {
         this.items = items;
         this._changed();
     }
-    
+
     getProductById(id: string): IProductModel | null {
         const idArr = this.items.map(item => item.id);
         const searchIndex = idArr.indexOf(id);
@@ -21,6 +21,6 @@ export class CatalogModel implements ICatalogModel {
     }
 
     protected _changed() {
-        this.events.emit('catalog:change', {items: this.items});
+        this.events.emit('catalog:change', { items: this.items });
     }
 }

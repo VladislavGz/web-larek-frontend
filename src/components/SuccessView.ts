@@ -14,7 +14,7 @@ export class SuccessView implements IView {
         });
     }
 
-    render(data: {total: number}): HTMLElement {
+    render(data: { total: number }): HTMLElement {
         if (data) {
             this.description.textContent = `Списано ${data.total} синапсов`;
         }

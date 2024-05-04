@@ -46,15 +46,15 @@ export class FormOrderView extends FormView {
         this.addressInput = this.container.elements.namedItem('address') as HTMLInputElement;
 
         this.orderButtonCard.addEventListener('click', () => {
-            this.events.emit('ui:orderForm-paymentMethodButton', {paymentMethod: 'online'});
+            this.events.emit('ui:orderForm-paymentMethodButton', { paymentMethod: 'online' });
         });
 
         this.orderButtonCash.addEventListener('click', () => {
-            this.events.emit('ui:orderForm-paymentMethodButton', {paymentMethod: 'cash'});
+            this.events.emit('ui:orderForm-paymentMethodButton', { paymentMethod: 'cash' });
         });
 
         this.addressInput.addEventListener('input', () => {
-            this.events.emit('ui:orderForm-addressInput', {address: this.addressInput.value});
+            this.events.emit('ui:orderForm-addressInput', { address: this.addressInput.value });
         })
 
         this.container.addEventListener('submit', evt => {
@@ -82,7 +82,7 @@ export class FormOrderView extends FormView {
 
     checkValidity(): string {
         if (!(this.orderButtonCard.classList.contains('button_alt-active') || this.orderButtonCash.classList.contains('button_alt-active'))) return 'data-err-paymentMethod';
-        if(!this.addressInput.value) return 'data-err-adress';
+        if (!this.addressInput.value) return 'data-err-adress';
         return '';
     }
 
@@ -108,11 +108,11 @@ export class FormContactsView extends FormView {
         this.phoneInput = this.container.elements.namedItem('phone') as HTMLInputElement;
 
         this.emailInput.addEventListener('input', () => {
-            this.events.emit('ui:contactsForm-emailInput', {email: this.emailInput.value});
+            this.events.emit('ui:contactsForm-emailInput', { email: this.emailInput.value });
         });
 
         this.phoneInput.addEventListener('input', () => {
-            this.events.emit('ui:contactsForm-phoneInput', {phone: this.phoneInput.value});
+            this.events.emit('ui:contactsForm-phoneInput', { phone: this.phoneInput.value });
         });
 
         this.container.addEventListener('submit', evt => {
@@ -127,7 +127,7 @@ export class FormContactsView extends FormView {
         return '';
     }
 
-    override render(data?: {email: string, phone: string}): HTMLElement {
+    override render(data?: { email: string, phone: string }): HTMLElement {
         if (data) {
             this.emailInput.value = data.email;
             this.phoneInput.value = data.phone;
