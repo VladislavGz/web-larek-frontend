@@ -97,3 +97,44 @@ export class FormOrderView extends FormView {
     }
 }
 
+export class FormContactsView extends FormView {
+
+    protected emailInput: HTMLInputElement;
+    protected phoneInput: HTMLInputElement;
+
+    constructor(container: HTMLFormElement, events: IEventEmitter) {
+        super(container, events);
+        this.emailInput = this.container.elements.namedItem('email') as HTMLInputElement;
+        this.phoneInput = this.container.elements.namedItem('phone') as HTMLInputElement;
+
+        this.emailInput.addEventListener('input', () => {
+            this.events.emit('ui:contactsForm-emailInput', {email: this.emailInput.value});
+        });
+
+        this.phoneInput.addEventListener('input', () => {
+            this.events.emit('ui:contactsForm-phoneInput', {phone: this.phoneInput.value});
+        });
+
+        this.container.addEventListener('submit', evt => {
+            evt.preventDefault();
+            this.events.emit('ui:contactsForm-submit', {});
+        });
+    }
+
+    checkValidity(): string {
+        if (!this.emailInput.value) return 'data-err-email';
+        if (!this.phoneInput.value) return 'data-err-phone';
+        return '';
+    }
+
+    override render(data?: {email: string, phone: string}): HTMLElement {
+        if (data) {
+            this.emailInput.value = data.email;
+            this.phoneInput.value = data.phone;
+            this.validate(this.checkValidity());
+        }
+
+        return this.container;
+    }
+}
+
