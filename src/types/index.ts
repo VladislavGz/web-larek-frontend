@@ -41,7 +41,7 @@ export interface IBasketModel {
 export type TPaymentMethod = 'cash' | 'online' | '';
 
 export type TUserData = {
-    paymentMethod: TPaymentMethod,
+    payment: TPaymentMethod,
     address: string,
     email: string,
     phone: string,

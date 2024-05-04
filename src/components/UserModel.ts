@@ -46,7 +46,7 @@ export class UserModel implements IUserModel {
     }
 
     getUserData = (): TUserData => ({
-        paymentMethod: this._paymentMethod,
+        payment: this._paymentMethod,
         address: this._address,
         email: this._email,
         phone: this._phone,

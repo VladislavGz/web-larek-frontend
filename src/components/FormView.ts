@@ -86,9 +86,9 @@ export class FormOrderView extends FormView {
         return '';
     }
 
-    override render(data?: { paymentMethod: TPaymentMethod, address: string }): HTMLElement {
+    override render(data?: { payment: TPaymentMethod, address: string }): HTMLElement {
         if (data) {
-            this.setPaymentMethod(data.paymentMethod);
+            this.setPaymentMethod(data.payment);
             this.addressInput.value = data.address;
             this.validate(this.checkValidity());
         }
