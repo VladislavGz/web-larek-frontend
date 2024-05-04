@@ -5,7 +5,9 @@ import { BasketView } from './components/BasketView';
 import { CardCatalogView, CardFullView } from './components/CardView';
 import { CatalogModel } from './components/CatalogModel';
 import { CatalogView } from './components/CatalogView';
+import { FormOrderView } from './components/FormView';
 import { ModalView } from './components/ModalView';
+import { UserModel } from './components/UserModel';
 import { Api } from './components/base/api';
 import { EventEmitter } from './components/base/events';
 import './scss/styles.scss';
@@ -19,6 +21,8 @@ const catalogItemTemplate = document.querySelector('#card-catalog') as HTMLTempl
 const cardFullTemplate = document.querySelector('#card-preview') as HTMLTemplateElement;
 const basketTemplate = document.querySelector('#basket') as HTMLTemplateElement;
 const basketItemTemplate = document.querySelector('#card-basket') as HTMLTemplateElement;
+const orderTemplate = document.querySelector('#order') as HTMLTemplateElement;
+const contactsTemplate = document.querySelector('#contacts') as HTMLTemplateElement;
 
 //базовые компоненты
 const api = new Api(API_URL);
@@ -27,6 +31,7 @@ const events = new EventEmitter();
 //модели
 const catalogModel = new CatalogModel(events);
 const basketModel = new BasketModel(events);
+const userModel = new UserModel();
 
 //отображения
 const catalog = new CatalogView(document.querySelector('.gallery'), events);
@@ -34,6 +39,7 @@ const modal = new ModalView(document.querySelector('#modal-container'), events);
 const cardFull = new CardFullView(cloneTemplate(cardFullTemplate), events);
 const basketIcon = new BasketIconView(document.querySelector('.header__basket'), events);
 const basket = new BasketView(cloneTemplate(basketTemplate), events);
+const orderForm = new FormOrderView(cloneTemplate(orderTemplate), events);
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
 //событие изменения модели каталога товаров
@@ -103,6 +109,23 @@ events.on('ui:basket-remove-item', (data: {id: string}) => {
 //событие клика по кнопке оформления заказа
 events.on('ui:basket-order', () => {
     console.log(`EVT: ui:basket-order`);
+
+    modal.render(orderForm.render());
+});
+
+//событие клика по кнопке выбора способа оплаты картой
+events.on('ui:orderForm-orderButtonCard', () => {
+    console.log(`EVT: ui:orderForm-orderButtonCard`);
+});
+
+//событие клика по кнопке выбора способа оплаты при получении
+events.on('ui:orderForm-orderButtonCash', () => {
+    console.log(`EVT: ui:orderForm-orderButtonCash`);
+});
+
+//событие инпута поле ввода адреса доставки
+events.on('ui:orderForm-addressInput', () => {
+    console.log(`EVT: ui:orderForm-addressInput`);
 });
 
 /*------------------------------------------------------------------------------------------------------------------------------------*/
