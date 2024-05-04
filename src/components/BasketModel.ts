@@ -48,6 +48,10 @@ export class BasketModel implements IBasketModel {
         }
     }
 
+    checkProductById(id: string): boolean {
+        return !!this.items[id];
+    }
+
     protected _changed() {
         this.events.emit('basket:change', this.getItems());
     }

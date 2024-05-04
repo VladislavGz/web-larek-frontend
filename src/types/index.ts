@@ -36,6 +36,7 @@ export interface IBasketModel {
     clear(): void;
     getItems(): TBasketItems;
     getBasketOrderData(): TBasketOrderData;
+    checkProductById(id: string): boolean;
 }
 
 export type TPaymentMethod = 'cash' | 'online' | '';
