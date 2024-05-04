@@ -135,7 +135,7 @@ function handlePhoneInput(data: { phone: string }) {
 }
 
 //обработка сабмита формы контактов
-function hancleContactsFormSubmit() {
+function handleContactsFormSubmit() {
     api.post('/order', {
         ...userModel.getUserData(),
         ...basketModel.getBasketOrderData()
@@ -198,7 +198,7 @@ events.on('ui:contactsForm-emailInput', handleEmailInput);
 events.on('ui:contactsForm-phoneInput', handlePhoneInput);
 
 //событие сабмита формы контактов
-events.on('ui:contactsForm-submit', hancleContactsFormSubmit);
+events.on('ui:contactsForm-submit', handleContactsFormSubmit);
 
 //событие изменения данных пользователя
 events.on('user:change', handleUserDataChange);
