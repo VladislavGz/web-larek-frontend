@@ -21,7 +21,7 @@ export type TBasketItems = {
 }
 
 export type TBasketOrderData = {
-    total: string;
+    total: number;
     items: string[];
 }
 
