@@ -1,4 +1,4 @@
-import { IUserModel, TPaymentMethod } from "../types";
+import { IEventEmitter, IUserModel, TPaymentMethod } from "../types";
 
 export class UserModel implements IUserModel {
     private _paymentMethod: TPaymentMethod;
@@ -6,7 +6,7 @@ export class UserModel implements IUserModel {
     private _email: string;
     private _phone: string;
 
-    constructor() {
+    constructor(protected events: IEventEmitter) {
         this._address = '';
         this._paymentMethod = '';
         this._email = '';
@@ -17,6 +17,7 @@ export class UserModel implements IUserModel {
         return this._paymentMethod;
     }
     set paymentMethod(method: TPaymentMethod) {
+        this.events.emit('user:change', this.getUserData());
         this._paymentMethod = method;
     }
 
@@ -24,6 +25,7 @@ export class UserModel implements IUserModel {
         return this._address;
     }
     set address(address: string) {
+        this.events.emit('user:change', this.getUserData());
         this._address = address;
     }
 
@@ -31,6 +33,7 @@ export class UserModel implements IUserModel {
         return this._email;
     }
     set email(email: string) {
+        this.events.emit('user:change', this.getUserData());
         this._email = email;
     }
 
@@ -38,6 +41,14 @@ export class UserModel implements IUserModel {
         return this._phone;
     }
     set phone(phone: string) {
+        this.events.emit('user:change', this.getUserData());
         this._phone = phone;
     }
+
+    getUserData = () => ({
+        paymentMethod: this._paymentMethod,
+        address: this._address,
+        email: this._email,
+        phone: this._phone,
+    })
 }
