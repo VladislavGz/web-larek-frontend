@@ -29,11 +29,17 @@ export class FormOrderView extends FormView {
 
         this.orderButtonCard.addEventListener('click', () => {
             this.setPaymentMethod('card');
+            this.events.emit('ui:orderForm-orderButtonCard', {});
         });
 
         this.orderButtonCash.addEventListener('click', () => {
             this.setPaymentMethod('cash');
+            this.events.emit('ui:orderForm-orderButtonCash', {});
         });
+
+        this.addressInput.addEventListener('input', () => {
+            this.events.emit('ui:orderForm-addressInput', {});
+        })
     }
 
     setPaymentMethod(method: string): void {
